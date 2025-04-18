@@ -1,22 +1,41 @@
-// .devcontainer/devcontainer.json
 {
-    "name": "Django + PostgreSQL",
-    "build": { "dockerfile": "Dockerfile" },
-    "settings": {
-      "terminal.integrated.shell.linux": "/bin/bash"
-    },
+    // A human‑readable name for the container
+    "name": "Django + PostgreSQL (Compose)",
+  
+    // <-- Add your Compose file(s) here:
+    "dockerComposeFile": [
+      "docker-compose.yml"
+    ],
+  
+    // <-- And tell Codespaces which service to use as your "workspace" container:
+    "service": "app",
+  
+    // (Alternatively, if you had multiple Compose files:)
+    // "dockerComposeFile": ["docker-compose.yml", "docker-compose.override.yml"],
+    // "service": "app",
+  
+    // Where VS Code will open your code by default
+    "workspaceFolder": "/workspace",
+  
+    // Any VS Code extensions you want pre‑installed
     "extensions": [
       "ms-python.python",
-      "ms-azuretools.vscode-docker",
-      "ms-python.vscode-pylance"
+      "ms-azuretools.vscode-docker"
     ],
+  
+    // Any ports you want forwarded automatically
     "forwardPorts": [8000],
+  
+    // Commands to run once, right after creating the container
     "postCreateCommand": "pip install -r requirements.txt && python src/manage.py migrate",
+  
+    // Commands to run each time the container starts
     "postStartCommand": "python src/manage.py runserver 0.0.0.0:8000",
-    "remoteUser": "vscode",
+  
+    // Runtime environment variables
     "containerEnv": {
       "DJANGO_SETTINGS_MODULE": "settings.development",
-      "DATABASE_URL": "postgres://postgres:postgres@localhost:5432/postgres"
+      "DATABASE_URL": "postgres://postgres:postgres@db:5432/postgres"
     }
   }
   
